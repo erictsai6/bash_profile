@@ -1,50 +1,46 @@
+#PATH
+export PATH=$PATH:$HOME/bin
+export LIBRARY_PATH=$LIBRARY_PATH:/usr/local/opt/openssl/lib/
+
 ###  Listens to a port and outputs the process using it ###
 pidportfunction() {
     lsof -n -i4TCP:$1 | grep LISTEN
 }
- 
+
 alias pidport=pidportfunction
 
-###  Simple function to kill all phantomjs processes  ###
-killphantomfunction() {
-    ps -ef | grep phantom | grep -v grep | awk '{print $2}' | sudo xargs kill
-}
-
-alias killphantom=killphantomfunction
-
+###  Shortcut for git status by typing gs instead  ###
 gitstatusfunction() {
     git status
 }
 alias gs=gitstatusfunction
 
 jdkswitchfunction() {
-    export JAVA_HOME=`/usr/libexec/java_home -d 64 -v "1.$1*"`    
+    export JAVA_HOME=`/usr/libexec/java_home -d 64 -v "1.$1*"`
 }
 alias jdkswitch=jdkswitchfunction
 
-###  Sets up the PATH environment variable  ###
-export PATH=$PATH:/Users/etsai/Documents/programs/gradle-1.11/bin
-export PATH=$PATH:/Users/etsai/Documents/programs/scala-2.11.2/bin
-export PATH=$PATH:/Users/etsai/Documents/programs/bin/
+export JAVA_HOME=`/usr/libexec/java_home -d 64 -v "1.8*"`
 
-export JAVA_HOME=`/usr/libexec/java_home -d 64 -v "1.7*"`
+export ANDROID_HOME=/Users/eric.tsai/Library/Android/sdk
 
-if [ -f ~/.git-completion.bash ]; then
-    . ~/.git-completion.bash
-fi
+[ -f /usr/local/etc/bash_completion ] && . /usr/local/etc/bash_completion
 
 export CLICOLOR=1
 export LSCOLORS=GxFxCxDxBxegedabagaced
 
-eval "$(rbenv init -)"
+export GOPATH=$HOME/go
+export GO111MODULE=on
+export PATH=$PATH:$GOPATH/bin
+export GOPRIVATE="gitlab.cbinsights.com"
 
-key_file=~/.ssh/id_rsa
+export PYTHONPATH=$PYTHONPATH:/Users/eric.tsai/dev/projects:/Users/eric.tsai/dev/cbi-lib/py
+export CBICONF=/Users/eric.tsai/dev/cbi-lib/config.ini
 
-# Add if not already added
-[[ -z $(ssh-add -L | grep $key_file) ]] && ssh-add $key_file
+### Shortcut for navigating to gopath
+cdgofunction() {
+    cd ~/go/src/github.com/cbinsights/
+}
+alias cdgo=cdgofunction
 
-###-tns-completion-start-###
-if [ -f /Users/etsai/.tnsrc ]; then 
-    source /Users/etsai/.tnsrc 
-fi
-###-tns-completion-end-###
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
